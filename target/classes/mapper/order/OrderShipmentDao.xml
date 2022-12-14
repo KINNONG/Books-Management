@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.order.dao.OrderShipmentDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.order.entity.OrderShipmentEntity" id="orderShipmentMap">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="contacts" column="contacts"/>
+        <result property="mobile" column="mobile"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="districtId" column="district_id"/>
+        <result property="address" column="address"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="cityName" column="city_name"/>
+        <result property="districtName" column="district_name"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.kinnong.modules.order.entity.OrderShipmentEntity">
+		select * from book_order_shipment where id = #{value}
+	</select>
+	
+	<select id="queryByOrderId" resultType="com.kinnong.modules.order.entity.OrderShipmentEntity">
+		select * from book_order_shipment where order_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.kinnong.modules.order.entity.OrderShipmentEntity">
+		select * from book_order_shipment
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from book_order_shipment 
+	</select>
+	 
+	<insert id="save" parameterType="com.kinnong.modules.order.entity.OrderShipmentEntity">
+		insert into book_order_shipment
+		(
+			`order_id`, 
+			`contacts`, 
+			`mobile`, 
+			`province_id`, 
+			`city_id`, 
+			`district_id`, 
+			`address`, 
+			`province_name`, 
+			`city_name`, 
+			`district_name`, 
+			`update_time`
+		)
+		values
+		(
+			#{orderId}, 
+			#{contacts}, 
+			#{mobile}, 
+			#{provinceId}, 
+			#{cityId}, 
+			#{districtId}, 
+			#{address}, 
+			#{provinceName}, 
+			#{cityName}, 
+			#{districtName}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.kinnong.modules.order.entity.OrderShipmentEntity">
+		update book_order_shipment 
+		<set>
+			<if test="orderId != null">`order_id` = #{orderId}, </if>
+			<if test="contacts != null">`contacts` = #{contacts}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="provinceId != null">`province_id` = #{provinceId}, </if>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="districtId != null">`district_id` = #{districtId}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from book_order_shipment where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from book_order_shipment where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

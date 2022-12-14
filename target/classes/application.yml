@@ -1,0 +1,59 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+    port: 8080
+    context-path: /
+
+# mysql
+spring:
+    jmx:
+        default-domain: book-server
+    # 环境 dev|test|pro
+    profiles:
+        active: dev
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+    # jackson时间格式化
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            enabled: true
+    # 指定静态资源的路径
+    resources:
+        static-locations: classpath:/static/,classpath:/views/,file:${fileupload.filepath}
+
+# Mybatis配置
+mybatis:
+    mapperLocations: classpath:mapper/**/*.xml
+    configLocation: classpath:mybatis.xml
+
+#jwt配置
+jwt:
+    # 加密秘钥
+    secret: b65vhvpob8kw5qnuh09rihdjscja4ecw[www.wfuhui.com]
+    # token有效时长，7天，单位秒
+    expire: 604800
+    header: token
+
+#小程序配置
+wechat:
+  miniapp:
+    appid: wxf52c4604e8ee4cbd
+    secret: 3f1ffca6346cf24ca0740a5fa315286c
+    token:
+    aesKey:
+    msgDataFormat: JSON
+  pay:
+    appId: xxxxxxxx
+    mchId:
+    mchKey:
+    subAppId:
+    subMchId:
+    keyPath:
+    notifyUrl: https://x.com/api/wechat/pay/parseOrderNotifyResult

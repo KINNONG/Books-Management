@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>图书管理</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/admin-lte@2.3.8/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/admin-lte@2.3.8/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.11.1/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/blueimp-file-upload@9.31.0/css/jquery.fileupload.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div id="app" class="wrapper" v-cloak>
+
+  <main-header></main-header> 
+  <main-sidebar></main-sidebar>
+  <!-- =============================================== -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <content-header title="图书管理"></content-header>
+    
+    <!-- Main content -->
+    <section class="content">
+	<div v-show="showList">
+		<div class="box">
+			<div class="box-header with-border">
+              <h3 class="box-title">列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+				<div class="grid-btn">
+					<div class="form-group col-sm-2">
+						<input type="text" class="form-control" v-model="q.bookName" @keyup.enter="query" placeholder="图书名称">
+					</div>
+					<a class="btn btn-default" @click="query">查询</a>
+					<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+					<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+					<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+					<a class="btn btn-primary" @click="upper"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;上架</a>
+					<a class="btn btn-primary" @click="lower"><i class="fa fa-arrow-circle-o-down"></i>&nbsp;下架</a>
+				</div>
+			    <table id="table"></table>
+			</div>
+		</div>
+    </div>
+    
+    <div v-show="!showList">
+		<div class="box">
+			<div class="box-header with-border">
+              <h3 class="box-title">{{title}}</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">图片<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					        <!-- The fileinput-button span is used to style the file input field as button -->
+						    <span class="btn btn-success fileinput-button">
+						        <i class="glyphicon glyphicon-plus"></i>
+						        <span>选择图片...</span>
+						        <!-- The file input field used as target for the file upload widget -->
+						        <input id="fileupload" type="file" name="file" multiple>
+						    </span>
+						    <br>
+						    <br>
+						    <!-- The container for the uploaded files -->
+						    <div id="files" class="row">
+						    	<div class="col-sm-3 img-wrap">
+						    		<img alt="" :src="book.picUrl" width="64" height="80">
+						    	</div>
+						    </div>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">图书名称<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					      <input type="text" class="form-control" v-model="book.bookName" placeholder="图书名称"/>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">分类<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					      <select class="form-control" v-model="book.categoryId">
+					      	<option value="">--请选择分类--</option>
+					      	<option v-for="category in categoryList" :value="category.id">{{category.categoryName}}</option>
+					      </select>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">作者<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					      <input type="text" class="form-control" v-model="book.author" placeholder="作者"/>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">出版社<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					      <input type="text" class="form-control" v-model="book.press" placeholder="出版社"/>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">价格<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					      <input type="number" class="form-control" v-model="book.price" placeholder="价格"/>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">库存<span class="text-danger">*</span></div>
+					   	<div class="col-sm-7">
+					      <input type="number" class="form-control" v-model="book.stock" placeholder="库存"/>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">上下架</div>
+					   	<div class="col-sm-7">
+		                    <label class="radio-inline">
+		                      <input name="enable" type="radio" value="1" v-model="book.status">上架
+		                    </label>
+		                    <label class="radio-inline">
+		                      <input name="enable" type="radio" value="0" v-model="book.status">下架
+		                    </label>
+					    </div>
+					</div>
+					<div class="form-group">
+					   	<div class="col-sm-2 control-label">简介</div>
+					   	<div class="col-sm-7">
+					   	  <textarea rows="" cols="" class="form-control" v-model="book.describe" placeholder="简介"></textarea>
+					      <!-- 加载编辑器的容器 
+						  <script id="container" name="content" type="text/plain" style="height: 400px">
+        					{{book.describe}}
+    			  		  </script>-->
+					    </div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label"></div> 
+						<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+						&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</section>
+	</div>
+</div>
+
+<script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/vue@2.2.6/dist/vue.min.js"></script>
+<script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.11.1/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/admin-lte@2.3.8/dist/js/app.js"></script>
+<script src="https://unpkg.com/blueimp-file-upload@9.31.0/js/vendor/jquery.ui.widget.js"></script>
+<script src="https://unpkg.com/blueimp-file-upload@9.31.0/js/jquery.fileupload.js"></script>
+<script src="/js/admin/components.js"></script>
+<script src="/js/admin/common.js"></script>
+<script src="/plugins/ueditor/ueditor.config.js"></script>
+<script src="/plugins/ueditor/ueditor.all.min.js"></script>
+<script src="/js/admin/book/book.js"></script>
+
+<script type="text/javascript">
+/* var ue = UE.getEditor('container',{
+    toolbars: [
+        ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'simpleupload']
+    ],
+    autoHeightEnabled: true,
+    autoFloatEnabled: true
+}); */
+
+$(function(){
+	// Change this to the location of your server-side upload handler:
+    var url = "/api/fileupload/upload";
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            if(data.result.code == 0){
+            	vm.book.picUrl = data.result.url;
+            }
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+})
+</script>
+</body>
+</html>

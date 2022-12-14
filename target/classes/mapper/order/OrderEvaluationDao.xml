@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.order.dao.OrderEvaluationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.order.entity.OrderEvaluationEntity" id="orderEvaluationMap">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="content" column="content"/>
+        <result property="star" column="star"/>
+        <result property="createTime" column="create_time"/>
+        <result property="bookId" column="book_id"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.kinnong.modules.order.entity.OrderEvaluationEntity">
+		select * from book_order_evaluation where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.kinnong.modules.order.entity.OrderEvaluationEntity">
+		select e.*, u.nickname as 'member.nickname', u.avatar_url as 'member.avatarUrl', b.book_name 'book.bookName' from book_order_evaluation e left join base_member u on e.member_id = u.id
+		left join book_book b on b.id = e.book_id
+		<where>
+			<if test="bookId != null">
+				and e.book_id = #{bookId}
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from book_order_evaluation e
+		<where>
+			<if test="bookId != null">
+				and e.book_id = #{bookId}
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.kinnong.modules.order.entity.OrderEvaluationEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into book_order_evaluation
+		(
+			`order_id`, 
+			`member_id`, 
+			`content`, 
+			`star`, 
+			`create_time`, 
+			`book_id`
+		)
+		values
+		(
+			#{orderId}, 
+			#{memberId}, 
+			#{content}, 
+			#{star}, 
+			#{createTime}, 
+			#{bookId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.kinnong.modules.order.entity.OrderEvaluationEntity">
+		update book_order_evaluation 
+		<set>
+			<if test="orderId != null">`order_id` = #{orderId}, </if>
+			<if test="memberId != null">`member_id` = #{memberId}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="star != null">`star` = #{star}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="bookId != null">`book_id` = #{bookId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from book_order_evaluation where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from book_order_evaluation where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

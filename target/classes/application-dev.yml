@@ -1,0 +1,30 @@
+spring:
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/a_book?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+        #连接池的配置信息
+        initialSize: 10
+        minIdle: 10
+        maxActive: 100
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+#服务器地址
+serverUrl: http://localhost:8080
+# 文件上传
+fileupload:
+    server: ${serverUrl}/fileupload
+    filepath: c:/file
+ueditor:
+    imageActionName: uploadimage
+    imageUrlPrefix: ${serverUrl}/fileupload
+    imagePath: /fileupload/
+    imageFieldName: upfile
+    imageMaxSize: 2048

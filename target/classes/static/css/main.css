@@ -1,0 +1,60 @@
+html {
+	overflow-x: hidden;
+}
+
+[v-cloak] {
+	display: none;
+}
+
+.main-header .logo {
+	width: 200px;
+}
+
+.main-sidebar, .left-side {
+	width: 200px;
+}
+
+.main-header .navbar {
+	margin-left: 200px;
+}
+
+.content-wrapper, .right-side, .main-footer {
+	margin-left: 200px;
+}
+
+@media (max-width: 767px){
+	.main-header .logo, .main-header .navbar {
+    	width: 100%;
+	}
+	.main-header .navbar {
+    	margin: 0;
+	}
+	.content-wrapper, .right-side, .main-footer {
+	    margin-left: 0;
+	}
+}
+
+.img-wrap {
+	position: relative;
+}
+
+.img-wrap .img-remove {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: -10px;
+	right: 10px;
+	cursor: pointer;
+}
+
+.danger{
+	color: #d9534f;
+}
+
+.info{
+	color: #5bc0de;
+}
+
+a{
+	cursor: pointer;
+}

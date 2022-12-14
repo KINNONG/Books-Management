@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.book.dao.BookDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.book.entity.BookEntity" id="bookMap">
+        <result property="id" column="id"/>
+        <result property="bookName" column="book_name"/>
+        <result property="price" column="price"/>
+        <result property="picUrl" column="pic_url"/>
+        <result property="describe" column="describe"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+        <result property="press" column="press"/>
+        <result property="author" column="author"/>
+        <result property="stock" column="stock"/>
+        <result property="barcode" column="barcode"/>
+        <association property="category" javaType="com.kinnong.modules.book.entity.CategoryEntity">
+        	<result property="categoryName" column="category_name"/>
+        </association>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.kinnong.modules.book.entity.BookEntity">
+		select * from book_book where id = #{value}
+	</select>
+
+	<select id="queryList" resultMap="bookMap">
+		select g.*, c.category_name from book_book g left join book_category c on g.category_id = c.id
+		<where>
+			<if test="categoryId != null and categoryId != -1">
+				c.id = #{categoryId}
+			</if>
+			<if test="bookName != null and bookName != ''">
+				and (g.book_name like '%${bookName}%' or g.author like '%${bookName}%' or c.category_name like '%${bookName}%')
+			</if>
+		</where>
+		
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from book_book g left join book_category c on g.category_id = c.id
+		<where>
+			<if test="categoryId != null and categoryId != -1">
+				g.category_id = #{categoryId}
+			</if>
+			<if test="bookName != null and bookName != ''">
+				and (g.book_name like '%${bookName}%' or g.author like '%${bookName}%' or c.category_name like '%${bookName}%')
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.kinnong.modules.book.entity.BookEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into book_book
+		(
+			`book_name`, 
+			`category_id`, 
+			`price`, 
+			`author`, 
+			`press`, 
+			`pic_url`, 
+			`describe`, 
+			`status`, 
+			`stock`, 
+			`create_time`
+		)
+		values
+		(
+			#{bookName}, 
+			#{categoryId}, 
+			#{price}, 
+			#{author}, 
+			#{press}, 
+			#{picUrl}, 
+			#{describe}, 
+			#{status}, 
+			#{stock}, 
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.kinnong.modules.book.entity.BookEntity">
+		update book_book 
+		<set>
+			<if test="bookName != null">`book_name` = #{bookName}, </if>
+			<if test="categoryId != null">`category_id` = #{categoryId}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="author != null">`author` = #{author}, </if>
+			<if test="press != null">`press` = #{press}, </if>
+			<if test="picUrl != null">`pic_url` = #{picUrl}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="stock != null">`stock` = #{stock}, </if>
+			<if test="describe != null">`describe` = #{describe}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from book_book where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from book_book where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<update id="updateStatus">
+		update book_book set status = #{status} where id in 
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	<update id="delStock">
+		update book_book set stock = stock - #{stock} where id = #{id}
+	</update>
+	
+	<update id="addStock">
+		update book_book set stock = stock + #{stock} where id = #{id}
+	</update>
+	
+	<select id="queryByIds"
+		resultType="com.kinnong.modules.book.entity.BookEntity">
+		select * from book_book where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+</mapper>

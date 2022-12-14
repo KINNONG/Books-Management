@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.member.dao.MemberAuthDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.member.entity.MemberAuthEntity" id="memberAuthMap">
+        <result property="id" column="id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="openid" column="openid"/>
+        <result property="authType" column="auth_type"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.kinnong.modules.member.entity.MemberAuthEntity">
+		select * from base_member_auth where id = #{value}
+	</select>
+	
+	<select id="queryByOpenid" resultType="com.kinnong.modules.member.entity.MemberAuthEntity">
+		select * from base_member_auth where openid = #{value}
+	</select>
+	
+	<select id="queryOne" resultType="com.kinnong.modules.member.entity.MemberAuthEntity">
+		select * from base_member_auth where member_id = #{memberId} and auth_type = #{authType}
+	</select>
+	
+	<select id="queryMember" resultType="com.kinnong.modules.member.entity.MemberEntity">
+		select * from m_member where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.kinnong.modules.member.entity.MemberAuthEntity">
+		select * from base_member_auth
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from base_member_auth 
+	</select>
+	 
+	<insert id="save" parameterType="com.kinnong.modules.member.entity.MemberAuthEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into base_member_auth
+		(
+			`member_id`, 
+			`openid`, 
+			`auth_type`, 
+			`create_time`
+		)
+		values
+		(
+			#{memberId}, 
+			#{openid}, 
+			#{authType}, 
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.kinnong.modules.member.entity.MemberAuthEntity">
+		update base_member_auth 
+		<set>
+			<if test="memberId != null">`member_id` = #{memberId}, </if>
+			<if test="openid != null">`openid` = #{openid}, </if>
+			<if test="authType != null">`auth_type` = #{authType}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from base_member_auth where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from base_member_auth where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

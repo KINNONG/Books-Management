@@ -1,0 +1,8 @@
+{
+	"imageActionName": "uploadimage",
+    "imageUrlPrefix": "http://localhost/fileupload",
+    "imagePath": "/fileupload/",
+    "imageFieldName": "upfile",
+    "imageMaxSize": 2048,
+    "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".wma", ".rmvb", ".rm", ".mp4"]
+}

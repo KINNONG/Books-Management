@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.book.dao.HistoryDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap
+            type="com.kinnong.modules.book.entity.HistoryEntity" id="historyMap">
+		<result property="id" column="id" />
+		<result property="bookId" column="book_id" />
+		<result property="memberId" column="member_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<select id="queryObject"
+		resultType="com.kinnong.modules.book.entity.HistoryEntity">
+		select * from book_history where id = #{value}
+	</select>
+
+	<select id="queryByUserId"
+		resultType="com.kinnong.modules.book.entity.HistoryEntity">
+		select * from book_history where member_id = #{value}
+	</select>
+
+	<select id="queryByBookId"
+		resultType="com.kinnong.modules.book.entity.HistoryEntity">
+		select * from book_history where book_id = #{value}
+	</select>
+
+	<select id="queryList"
+		resultType="com.kinnong.modules.book.entity.HistoryEntity">
+		select * from book_history
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from book_history 
+		<where>
+			<if test="memberId != null">
+				and member_id = #{memberId}
+			</if>
+			<if test="bookId != null">
+				and book_id = #{bookId}
+			</if>
+		</where>
+	</select>
+
+	<insert id="save"
+		parameterType="com.kinnong.modules.book.entity.HistoryEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into book_history
+		(
+		`book_id`,
+		`member_id`,
+		`create_time`
+		)
+		values
+		(
+		#{bookId},
+		#{memberId},
+		#{createTime}
+		)
+	</insert>
+
+	<update id="update"
+		parameterType="com.kinnong.modules.book.entity.HistoryEntity">
+		update book_history
+		<set>
+			<if test="bookId != null">`book_id` = #{bookId}, </if>
+			<if test="memberId != null">`member_id` = #{memberId}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from book_history where id = #{value}
+	</delete>
+
+	<delete id="deleteBatch">
+		delete from book_history where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

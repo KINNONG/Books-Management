@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.member.dao.MemberDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.member.entity.MemberEntity" id="MemberMap">
+        <result property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="gender" column="gender"/>
+        <result property="realName" column="real_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="loginName" column="login_name"/>
+        <result property="password" column="password"/>
+        <result property="deposit" column="deposit"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    
+	<select id="queryObject" resultType="com.kinnong.modules.member.entity.MemberEntity">
+		select * from base_member where id = #{value}
+	</select>
+	
+	<select id="queryByLoginName" resultType="com.kinnong.modules.member.entity.MemberEntity">
+		select * from base_member where login_name = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.kinnong.modules.member.entity.MemberEntity">
+		select * from base_member
+		
+		<where>
+			<if test="nickname != null and nickname != ''">
+				and nickname like '%${nickname}%'
+			</if>
+			<if test="mobile != null and mobile != ''">
+				and mobile like '%${mobile}%'
+			</if>
+			<if test="realName != null and realName != ''">
+				and real_name like '%${realName}%'
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from base_member 
+		<where>
+			<if test="nickname != null and nickname != ''">
+				and nickname like '%${nickname}%'
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.kinnong.modules.member.entity.MemberEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into base_member
+		(
+			`nickname`, 
+			`login_name`, 
+			`password`, 
+			`avatar_url`, 
+			`gender`,
+			`real_name`,
+			`mobile`,
+			`create_time`
+		)
+		values
+		(
+			#{nickname}, 
+			#{loginName}, 
+			#{password}, 
+			#{avatarUrl}, 
+			#{gender},
+			#{realName},
+			#{mobile},
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.kinnong.modules.member.entity.MemberEntity">
+		update base_member 
+		<set>
+			<if test="nickname != null">`nickname` = #{nickname}, </if>
+			<if test="avatarUrl != null">`avatar_url` = #{avatarUrl}, </if>
+			<if test="realName != null">`real_name` = #{realName}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="deposit != null">`deposit` = #{deposit}, </if>
+			<if test="gender != null">`gender` = #{gender}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="addDeposit">
+		update base_member set deposit = deposit + #{deposit} where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from base_member where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from base_member where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

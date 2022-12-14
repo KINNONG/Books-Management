@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.order.dao.OrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.order.entity.OrderEntity" id="orderMap">
+        <result property="id" column="id"/>
+        <result property="orderNumber" column="order_number"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="memberId" column="member_id"/>
+        <result property="remark" column="remark"/>
+        <result property="courierNum" column="courier_num"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.kinnong.modules.order.entity.OrderEntity">
+		select o.*,u.nickname as 'member.nickname',u.real_name as 'member.realName',u.mobile as 'member.mobile' from book_order o left join base_member u on u.id = o.member_id where o.id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.kinnong.modules.order.entity.OrderEntity">
+		select o.*,u.nickname as 'member.nickname',u.real_name as 'member.realName',u.mobile as 'member.mobile' from book_order o left join base_member u on u.id = o.member_id
+		<where>
+			<if test="orderStatus != null and orderStatus != -1">
+				and order_status = #{orderStatus}
+			</if>
+			<if test="orderNumber != null and orderNumber != ''">
+				and order_number like '%${orderNumber}%'
+			</if>
+			<if test="memberId != null">
+				and member_id = #{memberId}
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by o.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from book_order 
+		<where>
+			<if test="orderStatus != null and orderStatus != -1">
+				order_status = #{orderStatus}
+			</if>
+			<if test="orderNumber != null and orderNumber != ''">
+				and order_number like '%${orderNumber}%'
+			</if>
+			<if test="memberId != null">
+				and member_id = #{memberId}
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.kinnong.modules.order.entity.OrderEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into book_order
+		(
+			`member_id`, 
+			`order_number`, 
+			`total_amount`, 
+			`order_status`, 
+			`start_date`, 
+			`end_date`, 
+			`remark`, 
+			`create_time`
+		)
+		values
+		(
+			#{memberId}, 
+			#{orderNumber}, 
+			#{totalAmount}, 
+			#{orderStatus}, 
+			#{startDate}, 
+			#{endDate}, 
+			#{remark}, 
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.kinnong.modules.order.entity.OrderEntity">
+		update book_order 
+		<set>
+			<if test="orderNumber != null">`order_number` = #{orderNumber}, </if>
+			<if test="totalAmount != null">`total_amount` = #{totalAmount}, </if>
+			<if test="orderStatus != null">`order_status` = #{orderStatus}, </if>
+			<if test="courierNum != null">`courier_num` = #{courierNum}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from book_order where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from book_order where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<update id="updateByOrderNumber" parameterType="com.kinnong.modules.order.entity.OrderEntity">
+		update book_order set `order_status` = #{orderStatus} where order_number = #{orderNumber}
+	</update>
+	
+	<!-- 查询近7天已完成借阅数 -->
+	<select id="queryOrderCount" resultType="java.util.Map">
+		SELECT date_format(create_time,'%Y-%m-%d') as createTime, count(1) count
+		FROM book_order t1
+		where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+		GROUP BY date_format(create_time,'%Y-%m-%d')
+	</select>
+
+</mapper>
