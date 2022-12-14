@@ -44,8 +44,8 @@ jwt:
 #小程序配置
 wechat:
   miniapp:
-    appid:
-    secret: 
+    appid: wxf52c4604e8ee4cbd
+    secret: 3f1ffca6346cf24ca0740a5fa315286c
     token:
     aesKey:
     msgDataFormat: JSON
