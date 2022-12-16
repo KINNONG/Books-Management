@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80031
 File Encoding         : 65001
 
-Date: 2022-12-15 03:47:53
+Date: 2022-12-16 17:44:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -71,14 +71,14 @@ CREATE TABLE `book_advert` (
   `sort` int DEFAULT NULL COMMENT '排序',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='广告';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='广告';
 
 -- ----------------------------
 -- Records of book_advert
 -- ----------------------------
-INSERT INTO `book_advert` VALUES ('1', 'http://localhost:8080/fileupload/20221215/55bb8e40-f630-4831-9111-93d1ed16fbd3.jpg', '1', null, '1', '2020-10-31 13:44:57');
-INSERT INTO `book_advert` VALUES ('2', 'http://localhost:8080/fileupload/20221215/8bc11e4a-5eee-4988-9f91-cae7c7cf043b.jpg', '1', null, '2', '2020-10-31 13:45:13');
-INSERT INTO `book_advert` VALUES ('3', 'http://localhost:8080/fileupload/20221215/b300d703-21da-4a48-bc3e-47400b9146fd.jpg', '1', '', '3', '2022-12-15 02:38:55');
+INSERT INTO `book_advert` VALUES ('1', 'http://localhost:8080/img/banner-3.jpg', '1', null, '1', '2020-10-31 13:44:57');
+INSERT INTO `book_advert` VALUES ('2', 'http://localhost:8080/img/banner-4.jpg', '1', null, '2', '2020-10-31 13:45:13');
+INSERT INTO `book_advert` VALUES ('3', 'http://localhost:8080/img/banner-5.jpg', '1', '', '3', '2022-12-15 02:38:55');
 
 -- ----------------------------
 -- Table structure for book_book
@@ -97,7 +97,7 @@ CREATE TABLE `book_book` (
   `describe` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci COMMENT '描述',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='图书';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='图书';
 
 -- ----------------------------
 -- Records of book_book
@@ -105,11 +105,12 @@ CREATE TABLE `book_book` (
 INSERT INTO `book_book` VALUES ('3', '旋挖', '2', '南海出版公司', '伊藤润二', '10.00', 'http://localhost:8080/img/book-2.jpg', '1', '1', null, '2020-10-20 22:12:05');
 INSERT INTO `book_book` VALUES ('5', '布局一个', '1', '南海出版公司', '余华', '20.00', 'http://localhost:8080/img/book-4.jpg', '1', '3', null, '2020-10-31 22:39:37');
 INSERT INTO `book_book` VALUES ('7', '夜晚的钱穆听', '1', '南海出版公司', '余华', '30.00', 'http://localhost:8080/img/book-3.jpg', '1', '1', '', '2020-10-31 22:39:43');
-INSERT INTO `book_book` VALUES ('9', '冰雪女王', '3', '广州商学院出版社', '慕容铭聚', '20.00', 'http://localhost:8080/fileupload/20221215/9784c4a4-2289-4ca9-9cd9-f4685f1a20d0.jpg', '1', '20', '', '2022-12-15 02:39:43');
-INSERT INTO `book_book` VALUES ('10', '森林公主', '3', '广州商学院出版社', '黄翔泽', '10.00', 'http://localhost:8080/fileupload/20221215/14b7b4dc-ed32-4df6-9e67-c59e1e8641d7.jpg', '1', '30', '', '2022-12-15 02:40:14');
-INSERT INTO `book_book` VALUES ('11', '跳美少女', '3', '广州商学院', '赵健龙', '10.00', 'http://localhost:8080/fileupload/20221215/ede59394-a55e-41fc-8ecc-bac54470b976.jpg', '1', '20', '', '2022-12-15 02:40:43');
-INSERT INTO `book_book` VALUES ('12', '猫耳少女', '3', '广州商学院出版社', '慕容铭居', '10.00', 'http://localhost:8080/fileupload/20221215/8720bde4-ca51-4002-8fc1-59c4b63951bc.jpg', '1', '20', '', '2022-12-15 02:41:09');
-INSERT INTO `book_book` VALUES ('13', '海滩姐妹', '3', '广州商学院出版社', '慕容名句', '20.00', 'http://localhost:8080/fileupload/20221215/a391f4e7-fbf2-4556-ac6a-50f162d04202.jpg', '1', '50', '', '2022-12-15 02:41:32');
+INSERT INTO `book_book` VALUES ('9', '冰雪女王', '3', '广州商学院出版社', '慕容铭聚', '20.00', 'http://localhost:8080/img/book-7.jpg', '1', '20', '', '2022-12-15 02:39:43');
+INSERT INTO `book_book` VALUES ('10', '森林公主', '3', '广州商学院出版社', '黄翔泽', '10.00', 'http://localhost:8080/img/book-8.jpg', '1', '30', '', '2022-12-15 02:40:14');
+INSERT INTO `book_book` VALUES ('11', '甜美少女', '3', '广州商学院', '赵健龙', '10.00', 'http://localhost:8080/img/book-9.jpg', '1', '20', '', '2022-12-15 02:40:43');
+INSERT INTO `book_book` VALUES ('12', '猫耳少女', '3', '广州商学院出版社', '慕容铭居', '10.00', 'http://localhost:8080/img/book-10.jpg', '1', '20', '', '2022-12-15 02:41:09');
+INSERT INTO `book_book` VALUES ('13', '海滩姐妹', '3', '广州商学院出版社', '慕容名句', '20.00', 'http://localhost:8080/img/book-11.jpg', '1', '50', '', '2022-12-15 02:41:32');
+INSERT INTO `book_book` VALUES ('14', '文静少女', '3', '广州商学院出版社', '赵健龙', '23.00', 'http://localhost:8080/img/book-12.jpg', '1', '23', '', '2022-12-16 17:26:53');
 
 -- ----------------------------
 -- Table structure for book_category
