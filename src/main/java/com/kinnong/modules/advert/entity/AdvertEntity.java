@@ -5,10 +5,9 @@ import java.util.Date;
 
 /**
  * Banner
- * 
- * @author lzl
- * @email 2803180149@qq.com
- * @date 2017-07-14 13:43:12
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public class AdvertEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

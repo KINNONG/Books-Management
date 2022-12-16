@@ -11,10 +11,9 @@ import com.kinnong.modules.sys.dao.BaseDao;
 
 /**
  * 会员
- * 
- * @author lzl
- * @email 2803180149@qq.com
- * @date 2017-09-17 22:24:01
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface MemberDao extends BaseDao<MemberEntity> {

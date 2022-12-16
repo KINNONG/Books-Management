@@ -6,8 +6,8 @@ import java.util.Map;
 /**
  * 返回数据
  *
- * @author lzl
- * @email 2803180149@qq.com
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;

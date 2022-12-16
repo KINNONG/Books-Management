@@ -10,8 +10,8 @@ import com.kinnong.web.interceptor.AuthorizationInterceptor;
 /**
  * MVC配置
  *
- * @author lzl
- * @email 2803180149@qq.com
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

@@ -7,9 +7,9 @@ import java.util.Date;
 
 /**
  * 浏览记录
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public class HistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

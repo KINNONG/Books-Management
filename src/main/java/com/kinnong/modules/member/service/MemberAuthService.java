@@ -8,10 +8,9 @@ import com.kinnong.modules.member.entity.MemberEntity;
 
 /**
  * 授权
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
- * @date 2018-11-04 08:58:33
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public interface MemberAuthService {
 	

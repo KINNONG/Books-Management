@@ -7,9 +7,9 @@ import com.kinnong.modules.sys.dao.BaseDao;
 
 /**
  * 借阅配送表
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface OrderShipmentDao extends BaseDao<OrderShipmentEntity> {

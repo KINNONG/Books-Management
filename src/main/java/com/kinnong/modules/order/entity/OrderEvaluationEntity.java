@@ -8,9 +8,9 @@ import com.kinnong.modules.member.entity.MemberEntity;
 
 /**
  * 订单评价
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public class OrderEvaluationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

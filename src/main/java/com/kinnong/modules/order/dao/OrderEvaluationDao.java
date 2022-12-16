@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 订单评价
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface OrderEvaluationDao extends BaseDao<OrderEvaluationEntity> {

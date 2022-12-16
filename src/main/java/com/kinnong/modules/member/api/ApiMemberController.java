@@ -15,8 +15,8 @@ import com.kinnong.modules.member.service.MemberService;
 
 /**
  * 用户接口
- * @author Administrator
- *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @RestController
 @RequestMapping("/api/member")

@@ -7,10 +7,9 @@ import com.kinnong.modules.book.entity.CategoryEntity;
 
 /**
  * 分类
- * 
- * @author lzl
- * @email 2803180149@qq.com
- * @date 2017-07-14 13:43:12
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public interface CategoryService {
 	

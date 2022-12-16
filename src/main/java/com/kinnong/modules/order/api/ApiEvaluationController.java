@@ -20,8 +20,8 @@ import com.kinnong.modules.order.service.OrderEvaluationService;
 
 /**
  * 评价留言
- * @author lzl
- *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @RestController
 @RequestMapping("/api/evaluation")

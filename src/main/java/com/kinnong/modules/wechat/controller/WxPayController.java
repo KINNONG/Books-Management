@@ -33,7 +33,8 @@ import com.kinnong.modules.order.service.OrderService;
 
 
 /**
- * @author lizhengle
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @RestController
 @RequestMapping("/api/wechat/pay")

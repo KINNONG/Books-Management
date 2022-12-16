@@ -7,9 +7,9 @@ import java.util.Map;
 
 /**
  * 书架
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public interface ShelfService {
 	

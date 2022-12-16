@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 
 /**
  * 
- * 
- * @author lzl
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public class OrderBookEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

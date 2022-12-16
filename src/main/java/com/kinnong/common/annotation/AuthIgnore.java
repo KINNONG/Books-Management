@@ -4,8 +4,8 @@ import java.lang.annotation.*;
 
 /**
  * api接口，忽略Token验证
- * @author lzl
- * @email 2803180149@qq.com
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -18,8 +18,8 @@ import com.kinnong.modules.book.service.ShelfService;
 
 /**
  * 书架接口
- * @author lzl
- *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @RestController
 @RequestMapping("/api/shelf")

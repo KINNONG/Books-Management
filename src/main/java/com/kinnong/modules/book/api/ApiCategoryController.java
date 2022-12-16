@@ -16,8 +16,8 @@ import com.kinnong.modules.book.service.CategoryService;
 
 /**
  * 分类接口
- * @author lzl
- *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @RestController
 @RequestMapping("/api/category")

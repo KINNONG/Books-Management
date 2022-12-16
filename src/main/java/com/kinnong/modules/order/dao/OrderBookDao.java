@@ -7,9 +7,9 @@ import com.kinnong.modules.sys.dao.BaseDao;
 
 /**
  * 
- * 
- * @author lzl
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface OrderBookDao extends BaseDao<OrderBookEntity> {

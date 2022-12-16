@@ -10,10 +10,9 @@ import com.kinnong.modules.sys.dao.BaseDao;
 
 /**
  * 图书
- * 
- * @author lzl
- * @email 2803180149@qq.com
- * @date 2017-07-14 13:43:12
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface BookDao extends BaseDao<BookEntity> {

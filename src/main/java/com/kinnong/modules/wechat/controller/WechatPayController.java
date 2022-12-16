@@ -33,7 +33,8 @@ import com.kinnong.web.utils.IPUtils;
 
 
 /**
- * @author lzl
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @RestController
 @RequestMapping("/api/pay/wechat")

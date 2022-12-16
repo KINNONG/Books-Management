@@ -6,9 +6,9 @@ import java.util.Date;
 
 /**
  * 日期处理
- * 
- * @author lzl
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public class DateUtils {
 	/** 时间格式(yyyy-MM-dd) */

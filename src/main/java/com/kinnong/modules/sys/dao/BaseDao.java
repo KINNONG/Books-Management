@@ -5,8 +5,8 @@ import java.util.Map;
 
 /**
  * 基础Dao(还需在XML文件里，有对应的SQL语句)
- * 
- * @author lzl
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 public interface BaseDao<T> {
 	

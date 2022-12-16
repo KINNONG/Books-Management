@@ -18,8 +18,8 @@ import com.kinnong.web.utils.JwtUtils;
 
 /**
  * 权限(Token)验证
- * @author lzl
- * @email 2803180149@qq.com
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Component
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {

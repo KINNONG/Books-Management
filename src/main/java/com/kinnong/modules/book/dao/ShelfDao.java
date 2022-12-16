@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * 书架
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface ShelfDao extends BaseDao<ShelfEntity> {

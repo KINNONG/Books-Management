@@ -8,9 +8,9 @@ import com.kinnong.modules.sys.dao.BaseDao;
 
 /**
  * 授权
- * 
- * @author lizhengle
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface MemberAuthDao extends BaseDao<MemberAuthEntity> {

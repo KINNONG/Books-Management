@@ -10,9 +10,9 @@ import com.kinnong.modules.sys.dao.BaseDao;
 
 /**
  * 借阅
- * 
- * @author lzl
- * @email 2803180149@qq.com
+ *
+ * @author ZJL
+ * @email 1044869436@qq.com
  */
 @Mapper
 public interface OrderDao extends BaseDao<OrderEntity> {
