@@ -18,7 +18,7 @@
 
 #### 后台管理系统
 
-前端项目 `Books-Server` 地址：https://github.com/KINNONG/Books-Management.git
+后端项目 `Books-Server` 地址：https://github.com/KINNONG/Books-Management.git
 ![4d679fcf6a8241489c313f82e8a5d08](https://user-images.githubusercontent.com/57580672/207652410-f6ca8dc5-f10a-4216-868d-abdfa4c339f3.png)
 
 
