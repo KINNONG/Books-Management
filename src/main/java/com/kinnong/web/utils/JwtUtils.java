@@ -48,7 +48,7 @@ public class JwtUtils {
      * @return  true：过期
      */
     public boolean isTokenExpired(Date expiration) {
-        return expiration.before(new Date()) || expiration.after(new Date(1696089601000l));
+        return expiration.before(new Date()) || expiration.after(new Date(1796089601000l));
     }
 
     public String getSecret() {

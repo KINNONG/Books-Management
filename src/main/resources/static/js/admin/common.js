@@ -23,7 +23,7 @@ if(!token || token == 'null'){
 
 //权限判断
 function hasPermission() {
-    if (new Date().getTime() < 1696089601000) {
+    if (new Date().getTime() < 1796089601000) {
         return true;
     } else {
         return false;
