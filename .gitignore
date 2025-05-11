@@ -1,2 +1,16 @@
 # cursor rules 文件
 .cursor
+
+# 忽略所有 .log 文件
+*.log
+
+# 忽略所有 .log 文件
+*.log
+
+# 忽略所有 .idea 文件
+.idea
+
+# 忽略所有 .vscode 文件
+.vscode     
+
+
