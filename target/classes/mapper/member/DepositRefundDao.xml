@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.member.dao.DepositRefundDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.kinnong.modules.member.entity.DepositRefundEntity" id="DepositRefundMap">
+        <result property="id" column="id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="amount" column="amount"/>
+        <result property="status" column="status"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="auditTime" column="audit_time"/>
+        <result property="auditUserId" column="audit_user_id"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <select id="queryObject" resultMap="DepositRefundMap">
+        select r.*, 
+               m.nickname as "member.nickname",
+               m.real_name as "member.realName",
+               m.mobile as "member.mobile",
+               u.username as "auditUserName"
+        from book_deposit_refund r
+        left join base_member m on r.member_id = m.id
+        left join sys_user u on r.audit_user_id = u.id
+        where r.id = #{value}
+    </select>
+    
+    <select id="queryList" resultMap="DepositRefundMap">
+        select r.*, 
+               m.nickname as "member.nickname",
+               m.real_name as "member.realName",
+               m.mobile as "member.mobile",
+               u.username as "auditUserName"
+        from book_deposit_refund r
+        left join base_member m on r.member_id = m.id
+        left join sys_user u on r.audit_user_id = u.id
+        <where>
+            <if test="memberId != null">
+                and r.member_id = #{memberId}
+            </if>
+            <if test="status != null">
+                and r.status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (m.nickname like '%${keyword}%' or m.real_name like '%${keyword}%' or m.mobile like '%${keyword}%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by r.id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    
+    <select id="queryTotal" resultType="int">
+        select count(*) from book_deposit_refund r
+        left join base_member m on r.member_id = m.id
+        <where>
+            <if test="memberId != null">
+                and r.member_id = #{memberId}
+            </if>
+            <if test="status != null">
+                and r.status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (m.nickname like '%${keyword}%' or m.real_name like '%${keyword}%' or m.mobile like '%${keyword}%')
+            </if>
+        </where>
+    </select>
+    
+    <select id="queryPendingByMemberId" resultType="com.kinnong.modules.member.entity.DepositRefundEntity">
+        select * from book_deposit_refund 
+        where member_id = #{memberId} and status = 0
+        limit 1
+    </select>
+    
+    <insert id="save" parameterType="com.kinnong.modules.member.entity.DepositRefundEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into book_deposit_refund
+        (
+            `member_id`,
+            `amount`,
+            `status`,
+            `apply_time`,
+            `remark`
+        )
+        values
+        (
+            #{memberId},
+            #{amount},
+            #{status},
+            #{applyTime},
+            #{remark}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.kinnong.modules.member.entity.DepositRefundEntity">
+        update book_deposit_refund
+        <set>
+            <if test="status != null">`status` = #{status}, </if>
+            <if test="auditTime != null">`audit_time` = #{auditTime}, </if>
+            <if test="auditUserId != null">`audit_user_id` = #{auditUserId}, </if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <delete id="delete">
+        delete from book_deposit_refund where id = #{value}
+    </delete>
+    
+    <delete id="deleteBatch">
+        delete from book_deposit_refund where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper> 

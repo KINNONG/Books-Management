@@ -293,3 +293,23 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2803180149@qq.com', '18021418906', '1', '2021-08-14 11:11:11');
+
+-- ----------------------------
+-- Table structure for book_deposit_refund
+-- ----------------------------
+DROP TABLE IF EXISTS `book_deposit_refund`;
+CREATE TABLE `book_deposit_refund` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `member_id` int DEFAULT NULL COMMENT '会员ID',
+  `amount` decimal(10,2) DEFAULT NULL COMMENT '退还金额',
+  `status` tinyint DEFAULT '0' COMMENT '状态，0：待审核，1：已通过，2：已拒绝',
+  `apply_time` datetime DEFAULT NULL COMMENT '申请时间',
+  `audit_time` datetime DEFAULT NULL COMMENT '审核时间',
+  `audit_user_id` int DEFAULT NULL COMMENT '审核人ID',
+  `remark` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='押金退还申请';
+
+-- ----------------------------
+-- Records of book_deposit_refund
+-- ----------------------------

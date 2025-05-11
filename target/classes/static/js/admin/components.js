@@ -240,6 +240,18 @@ Vue.component("main-sidebar", {
     			"orderNum": 6,
     			"open": null,
     			"list": []
+    		}, {
+    			"menuId": 7,
+    			"parentId": 0,
+    			"parentName": null,
+    			"name": "押金退还管理",
+    			"url": "/admin/member/depositRefund.html",
+    			"perms": null,
+    			"type": 1,
+    			"icon": "fa fa-money",
+    			"orderNum": 7,
+    			"open": null,
+    			"list": []
     		}],
     		activeMenuId:-1
         }
@@ -293,6 +305,6 @@ Vue.component("main-footer", {
 	    '<div class="pull-right hidden-xs">'+
 	      'Version 1.0'+
 	    '</div>'+
-	    'Copyright &copy; 2021 <a href="http://www.taobishe.cn" target="_blank">taobishe.cn</a> All Rights Reserved'+
+	    'Copyright &copy; 2024 <a href="http://www.kinnong.cn" target="_blank">kinnong.cn</a> All Rights Reserved'+
 	  '</footer>'
 });

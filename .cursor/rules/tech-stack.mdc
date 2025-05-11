@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 技术栈
+
+## 后端技术
+
+- **SpringBoot**: Web应用开发框架
+- **SpringSecurity**: 认证和授权框架
+- **MyBatis**: ORM框架
+- **JWT**: JSON Web Token登录支持
+- **Maven**: 项目管理工具
+
+## 前端技术
+
+- **Vue**: 前端框架
+- **JQuery**: 前端框架
+- **Bootstrap**: 前端框架
+- **ColorUI**: 前端UI框架（小程序）
+- **Ajax**: 前端HTTP框架
+- **Echarts**: JavaScript开源可视化图表库
+
+## 开发环境
+
+- **JDK**: 1.8
+- **MySQL**: 5.7
+- **微信开发者工具**: 用于小程序开发
+
+## 重要配置文件
+
+- **项目配置**: [pom.xml](mdc:pom.xml)
+- **数据库脚本**: [a_book.sql](mdc:a_book.sql)
+

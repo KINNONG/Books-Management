@@ -1,0 +1,21 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 项目概述
+
+Books-Management 是一个图书馆信息管理系统，基于SpringBoot+MyBatis实现，包括用户小程序和后台管理系统。
+
+## 主要功能
+
+- 前台小程序：用户注册登录、首页门户、图书查询、在线借阅、个人中心、我的信息、我的借阅、押金充值
+- 后台管理系统：统计分析、用户管理、分类管理、图书管理、借阅管理、管理员管理、统计报表、设置等
+
+## 主要入口
+
+- 应用入口： [BookApplication.java](mdc:src/main/java/com/kinnong/BookApplication.java)
+- 数据库脚本： [a_book.sql](mdc:a_book.sql)
+- 项目说明： [README.md](mdc:README.md)
+- 配置文件： [pom.xml](mdc:pom.xml)
+

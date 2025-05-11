@@ -36,7 +36,7 @@ mybatis:
 #jwt配置
 jwt:
     # 加密秘钥
-    secret: b65vhvpob8kw5qnuh09rihdjscja4ecw[www.wfuhui.com]
+    secret: b65vhvpob8kw5qnuh09rihdjscja4ecw[www.kinnong.com]
     # token有效时长，7天，单位秒
     expire: 604800
     header: token

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>押金退还申请</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/admin-lte@2.3.8/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/admin-lte@2.3.8/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.11.1/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div id="app" class="wrapper" v-cloak>
+  <main-header></main-header>
+  <main-sidebar></main-sidebar>
+  <!-- =============================================== -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <content-header title="押金退还申请管理"></content-header>
+
+    <!-- Main content -->
+    <section class="content">
+      <div v-show="showList">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">列表</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+            <div class="form-group">
+              <div class="col-sm-2">
+                <input type="text" class="form-control" v-model="q.keyword" @keyup.enter="query" placeholder="会员信息">
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" v-model="q.status" @change="query">
+                  <option value="">全部状态</option>
+                  <option value="0">待审核</option>
+                  <option value="1">已通过</option>
+                  <option value="2">已拒绝</option>
+                </select>
+              </div>
+              <a class="btn btn-default" @click="query">查询</a>
+              <a class="btn btn-primary" @click="audit(1)"><i class="fa fa-check"></i>&nbsp;通过</a>
+              <a class="btn btn-danger" @click="audit(2)"><i class="fa fa-close"></i>&nbsp;拒绝</a>
+            </div>
+            <table id="table"></table>
+          </div>
+        </div>
+      </div>
+      
+      <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-2 control-label">会员信息</div>
+            <div class="col-sm-10">
+              <div class="form-control-static">
+                {{depositRefund.member.nickname}} / 
+                {{depositRefund.member.realName || '未实名'}} / 
+                {{depositRefund.member.mobile || '无手机号'}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">申请金额</div>
+            <div class="col-sm-10">
+              <div class="form-control-static">¥ {{depositRefund.amount}}</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">申请时间</div>
+            <div class="col-sm-10">
+              <div class="form-control-static">{{depositRefund.applyTime}}</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">备注</div>
+            <div class="col-sm-10">
+              <textarea class="form-control" v-model="depositRefund.remark" placeholder="审核备注"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input v-if="auditType == 1" type="button" class="btn btn-primary" @click="saveOrUpdate" value="通过"/>
+            <input v-if="auditType == 2" type="button" class="btn btn-danger" @click="saveOrUpdate" value="拒绝"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+<script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/vue@2.2.6/dist/vue.min.js"></script>
+<script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.11.1/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/admin-lte@2.3.8/dist/js/app.js"></script>
+<script src="/js/admin/components.js"></script>
+<script src="/js/admin/common.js"></script>
+<script src="/js/admin/member/depositRefund.js"></script>
+</body>
+</html>
