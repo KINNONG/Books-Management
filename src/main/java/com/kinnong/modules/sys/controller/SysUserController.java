@@ -1,16 +1,21 @@
 package com.kinnong.modules.sys.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kinnong.common.utils.MD5Util;
 import com.kinnong.common.utils.Query;
 import com.kinnong.common.utils.R;
 import com.kinnong.modules.sys.entity.SysUserEntity;
 import com.kinnong.modules.sys.service.SysUserService;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 系统用户

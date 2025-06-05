@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kinnong.modules.share.dao.ShareConfigDao">
+
+    <resultMap type="com.kinnong.modules.share.entity.ShareConfigEntity" id="shareConfigMap">
+        <result property="id" column="id"/>
+        <result property="configKey" column="config_key"/>
+        <result property="configName" column="config_name"/>
+        <result property="configValue" column="config_value"/>
+        <result property="configType" column="config_type"/>
+        <result property="description" column="description"/>
+        <result property="enable" column="enable"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="queryObject" resultType="com.kinnong.modules.share.entity.ShareConfigEntity">
+        select * from share_config where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="shareConfigMap">
+        select * from share_config
+        <where>
+            <if test="configKey != null and configKey != ''">
+                and config_key like '%${configKey}%'
+            </if>
+            <if test="configName != null and configName != ''">
+                and config_name like '%${configName}%'
+            </if>
+            <if test="enable != null and enable != ''">
+                and enable = #{enable}
+            </if>
+        </where>
+        
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    
+    <select id="queryTotal" resultType="int">
+        select count(*) from share_config
+        <where>
+            <if test="configKey != null and configKey != ''">
+                and config_key like '%${configKey}%'
+            </if>
+            <if test="configName != null and configName != ''">
+                and config_name like '%${configName}%'
+            </if>
+            <if test="enable != null and enable != ''">
+                and enable = #{enable}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByConfigKey" resultType="com.kinnong.modules.share.entity.ShareConfigEntity">
+        select * from share_config where config_key = #{configKey} and enable = 1 limit 1
+    </select>
+     
+    <insert id="save" parameterType="com.kinnong.modules.share.entity.ShareConfigEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into share_config
+        (
+            `config_key`, 
+            `config_name`, 
+            `config_value`, 
+            `config_type`, 
+            `description`, 
+            `enable`,
+            `create_time`,
+            `update_time`
+        )
+        values
+        (
+            #{configKey}, 
+            #{configName}, 
+            #{configValue}, 
+            #{configType}, 
+            #{description}, 
+            #{enable},
+            #{createTime},
+            #{updateTime}
+        )
+    </insert>
+     
+    <update id="update" parameterType="com.kinnong.modules.share.entity.ShareConfigEntity">
+        update share_config 
+        <set>
+            <if test="configKey != null">`config_key` = #{configKey}, </if>
+            <if test="configName != null">`config_name` = #{configName}, </if>
+            <if test="configValue != null">`config_value` = #{configValue}, </if>
+            <if test="configType != null">`config_type` = #{configType}, </if>
+            <if test="description != null">`description` = #{description}, </if>
+            <if test="enable != null">`enable` = #{enable}, </if>
+            `update_time` = NOW()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateValueByKey">
+        update share_config set config_value = #{configValue}, update_time = NOW() 
+        where config_key = #{configKey}
+    </update>
+    
+    <delete id="delete">
+        delete from share_config where id = #{value}
+    </delete>
+    
+    <delete id="deleteBatch">
+        delete from share_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateEnable">
+        update share_config set enable = #{enable}, update_time = NOW() where id in 
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper> 

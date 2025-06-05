@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>分享配置管理</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/admin-lte@2.3.8/dist/css/AdminLTE.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/admin-lte@2.3.8/dist/css/skins/_all-skins.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.11.1/dist/bootstrap-table.min.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div id="app" class="wrapper" v-cloak>
+      <main-header></main-header>
+      <main-sidebar></main-sidebar>
+      <!-- =============================================== -->
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <content-header title="分享配置管理"></content-header>
+
+        <!-- Main content -->
+        <section class="content">
+          <div v-show="showList">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">配置列表</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div class="grid-btn">
+                  <div class="form-group col-sm-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="q.configKey"
+                      @keyup.enter="query"
+                      placeholder="文案内容"
+                    />
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="q.configName"
+                      @keyup.enter="query"
+                      placeholder="配置名称"
+                    />
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <select class="form-control" v-model="q.enable">
+                      <option value="">全部状态</option>
+                      <option value="1">启用</option>
+                      <option value="0">禁用</option>
+                    </select>
+                  </div>
+                  <a class="btn btn-default" @click="query">查询</a>
+                  <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                  <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                  <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                  <a class="btn btn-success" @click="enable"><i class="fa fa-check-circle"></i>&nbsp;启用</a>
+                  <a class="btn btn-warning" @click="disable"><i class="fa fa-ban"></i>&nbsp;禁用</a>
+                </div>
+                <table id="table"></table>
+              </div>
+            </div>
+          </div>
+
+          <div v-show="!showList">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{title}}</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label">配置键<span class="text-danger">*</span></div>
+                    <div class="col-sm-7">
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="shareConfig.configKey"
+                        placeholder="配置键（唯一标识）"
+                        :disabled="shareConfig.id != null"
+                      />
+                      <small class="help-block">配置键一旦创建不可修改，建议使用英文和下划线</small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label">配置区域<span class="text-danger">*</span></div>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" v-model="shareConfig.configName" placeholder="配置名称" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label">配置类型</div>
+                    <div class="col-sm-7">
+                      <select class="form-control" v-model="shareConfig.configType">
+                        <option value="string">字符串</option>
+                        <option value="json">JSON</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label">文案内容<span class="text-danger">*</span></div>
+                    <div class="col-sm-7">
+                      <textarea
+                        rows="4"
+                        class="form-control"
+                        v-model="shareConfig.configValue"
+                        placeholder="文案内容"
+                      ></textarea>
+                      <small class="help-block" v-if="shareConfig.configType === 'json'">
+                        JSON格式配置值，请确保格式正确
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label">描述</div>
+                    <div class="col-sm-7">
+                      <textarea
+                        rows="2"
+                        class="form-control"
+                        v-model="shareConfig.description"
+                        placeholder="配置描述"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label">状态</div>
+                    <div class="col-sm-7">
+                      <label class="radio-inline">
+                        <input name="enable" type="radio" value="1" v-model="shareConfig.enable" />启用
+                      </label>
+                      <label class="radio-inline">
+                        <input name="enable" type="radio" value="0" v-model="shareConfig.enable" />禁用
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 control-label"></div>
+                    <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定" />
+                    &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- 快速编辑弹窗 -->
+          <div class="modal fade" id="quickEditModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title">快速编辑配置值</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal">
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">配置键：</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static">{{quickEditData.configKey}}</p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">配置名称：</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static">{{quickEditData.configName}}</p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">配置值：</label>
+                      <div class="col-sm-9">
+                        <textarea
+                          rows="4"
+                          class="form-control"
+                          v-model="quickEditData.configValue"
+                          placeholder="请输入新的配置值"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" @click="saveQuickEdit">保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@2.2.6/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.11.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/admin-lte@2.3.8/dist/js/app.js"></script>
+    <script src="/js/admin/components.js"></script>
+    <script src="/js/admin/common.js"></script>
+    <script src="/js/admin/share/shareconfig.js"></script>
+  </body>
+</html>

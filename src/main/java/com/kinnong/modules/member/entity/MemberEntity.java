@@ -36,6 +36,41 @@ public class MemberEntity implements Serializable {
 	
 	private BigDecimal deposit;
 
+	/**
+	 * 身份证号
+	 */
+	private String idCard;
+
+	/**
+	 * 支付类型：wechat-微信，alipay-支付宝，bank-银行卡
+	 */
+	private String paymentType;
+
+	/**
+	 * 微信账户
+	 */
+	private String wechatAccount;
+
+	/**
+	 * 支付宝账户
+	 */
+	private String alipayAccount;
+
+	/**
+	 * 银行卡号
+	 */
+	private String bankCardNumber;
+
+	/**
+	 * 银行名称
+	 */
+	private String bankName;
+
+	/**
+	 * 持卡人姓名
+	 */
+	private String cardholderName;
+
 	public Long getId() {
 		return id;
 	}
@@ -115,5 +150,116 @@ public class MemberEntity implements Serializable {
 	public void setDeposit(BigDecimal deposit) {
 		this.deposit = deposit;
 	}
-	
+
+	/**
+	 * 设置：身份证号
+	 * @param idCard 身份证号
+	 */
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	/**
+	 * 获取：身份证号
+	 * @return String
+	 */
+	public String getIdCard() {
+		return idCard;
+	}
+
+	/**
+	 * 设置：支付类型
+	 * @param paymentType 支付类型
+	 */
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	/**
+	 * 获取：支付类型
+	 * @return String
+	 */
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	/**
+	 * 设置：微信账户
+	 * @param wechatAccount 微信账户
+	 */
+	public void setWechatAccount(String wechatAccount) {
+		this.wechatAccount = wechatAccount;
+	}
+
+	/**
+	 * 获取：微信账户
+	 * @return String
+	 */
+	public String getWechatAccount() {
+		return wechatAccount;
+	}
+
+	/**
+	 * 设置：支付宝账户
+	 * @param alipayAccount 支付宝账户
+	 */
+	public void setAlipayAccount(String alipayAccount) {
+		this.alipayAccount = alipayAccount;
+	}
+
+	/**
+	 * 获取：支付宝账户
+	 * @return String
+	 */
+	public String getAlipayAccount() {
+		return alipayAccount;
+	}
+
+	/**
+	 * 设置：银行卡号
+	 * @param bankCardNumber 银行卡号
+	 */
+	public void setBankCardNumber(String bankCardNumber) {
+		this.bankCardNumber = bankCardNumber;
+	}
+
+	/**
+	 * 获取：银行卡号
+	 * @return String
+	 */
+	public String getBankCardNumber() {
+		return bankCardNumber;
+	}
+
+	/**
+	 * 设置：银行名称
+	 * @param bankName 银行名称
+	 */
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	/**
+	 * 获取：银行名称
+	 * @return String
+	 */
+	public String getBankName() {
+		return bankName;
+	}
+
+	/**
+	 * 设置：持卡人姓名
+	 * @param cardholderName 持卡人姓名
+	 */
+	public void setCardholderName(String cardholderName) {
+		this.cardholderName = cardholderName;
+	}
+
+	/**
+	 * 获取：持卡人姓名
+	 * @return String
+	 */
+	public String getCardholderName() {
+		return cardholderName;
+	}
 }

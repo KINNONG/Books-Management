@@ -15,6 +15,13 @@
         <result property="password" column="password"/>
         <result property="deposit" column="deposit"/>
         <result property="createTime" column="create_time"/>
+        <result property="idCard" column="id_card"/>
+        <result property="paymentType" column="payment_type"/>
+        <result property="wechatAccount" column="wechat_account"/>
+        <result property="alipayAccount" column="alipay_account"/>
+        <result property="bankCardNumber" column="bank_card_number"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="cardholderName" column="cardholder_name"/>
     </resultMap>
     
 	<select id="queryObject" resultType="com.kinnong.modules.member.entity.MemberEntity">
@@ -71,7 +78,14 @@
 			`gender`,
 			`real_name`,
 			`mobile`,
-			`create_time`
+			`create_time`,
+			`id_card`,
+			`payment_type`,
+			`wechat_account`,
+			`alipay_account`,
+			`bank_card_number`,
+			`bank_name`,
+			`cardholder_name`
 		)
 		values
 		(
@@ -82,7 +96,14 @@
 			#{gender},
 			#{realName},
 			#{mobile},
-			#{createTime}
+			#{createTime},
+			#{idCard},
+			#{paymentType},
+			#{wechatAccount},
+			#{alipayAccount},
+			#{bankCardNumber},
+			#{bankName},
+			#{cardholderName}
 		)
 	</insert>
 	 
@@ -94,7 +115,14 @@
 			<if test="realName != null">`real_name` = #{realName}, </if>
 			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="deposit != null">`deposit` = #{deposit}, </if>
-			<if test="gender != null">`gender` = #{gender}</if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="idCard != null">`id_card` = #{idCard}, </if>
+			<if test="paymentType != null">`payment_type` = #{paymentType}, </if>
+			<if test="wechatAccount != null">`wechat_account` = #{wechatAccount}, </if>
+			<if test="alipayAccount != null">`alipay_account` = #{alipayAccount}, </if>
+			<if test="bankCardNumber != null">`bank_card_number` = #{bankCardNumber}, </if>
+			<if test="bankName != null">`bank_name` = #{bankName}, </if>
+			<if test="cardholderName != null">`cardholder_name` = #{cardholderName}</if>
 		</set>
 		where id = #{id}
 	</update>
